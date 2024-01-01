@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/components/styles.dart';
 import 'package:flutter_application_2/models/akun.dart';
+import 'package:flutter_application_2/pages/dashboard/AllLaporan.dart';
+import 'package:flutter_application_2/pages/dashboard/MyLaporan.dart';
+import 'package:flutter_application_2/pages/dashboard/ProfilePage.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -18,6 +21,7 @@ class DashboardFull extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _DashboardFull();
+
 }
 
 class _DashboardFull extends State<DashboardFull> {
@@ -69,17 +73,40 @@ class _DashboardFull extends State<DashboardFull> {
     }
   }
 
-  int _selectedIndex = 0;
-
   bool _isLoading = false;
 
+  int _selectedIndex = 0;
+
+  List<Widget> pages = [];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAkun();
+  
+  }
+
   Widget build(BuildContext context) {  
+    pages = <Widget>[
+    AllLaporan(akun: akun),
+    MyLaporan(akun: akun),
+    Profile(akun: akun),
+    ];
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
         child: Icon(Icons.add, size: 35),
-        onPressed: () {},
+        onPressed: () {
+            Navigator.pushNamed(context, '/add', arguments: {
+              'akun': akun,
+            });
+          },
       ),
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -89,7 +116,7 @@ class _DashboardFull extends State<DashboardFull> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: primaryColor,
         currentIndex: _selectedIndex,
-        //onTap: ,
+        onTap: _onItemTapped,
         selectedItemColor: Colors.white,
         selectedFontSize: 16,
         unselectedItemColor: Colors.grey[800],
@@ -109,10 +136,10 @@ class _DashboardFull extends State<DashboardFull> {
         ],
       ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Text('Masih kosong, diisi nanti'),
+    ? const Center(
+        child: CircularProgressIndicator(),
+      )
+    : pages.elementAt(_selectedIndex),
     );
   }
 }

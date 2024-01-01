@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/firebase_options.dart';
 import 'package:flutter_application_2/pages/splashpage.dart';
-// import 'package:flutter_application_2/pages/AddFormPage.dart';
+import 'package:flutter_application_2/pages/AddFormPage.dart';
 import 'package:flutter_application_2/pages/dashboard/DashboardPage.dart';
 // import 'package:flutter_application_2/pages/DetailPage.dart';
 import 'package:flutter_application_2/pages/LoginPage.dart';
@@ -22,7 +22,7 @@ Future<void> main() async {
       '/login': (context) => LoginPage(),
       '/register': (context) => const RegisterPage(),
       '/dashboard': (context) => const DashboardPage(),
-      // '/add': (context) => AddFormPage(),
+      '/add': (context) => AddFormPage(),
       // '/detail': (context) => DetailPage(),
     },
   ));
@@ -36,7 +36,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text('Hello World!'),
+          child: Text(''),
         ),
       ),
     );
