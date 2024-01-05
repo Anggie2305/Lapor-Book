@@ -7,15 +7,14 @@ import 'package:flutter_application_2/components/styles.dart';
 import 'package:flutter_application_2/models/laporan.dart';
 
 class ListItem extends StatefulWidget {
+  final Laporan laporan;
+  final Akun akun;
+  final bool isLaporanku;
   ListItem(
       {super.key,
       required this.laporan,
       required this.akun,
       required this.isLaporanku});
-
-  final Akun akun;
-  final bool isLaporanku;
-  final Laporan laporan;
 
   @override
   State<ListItem> createState() => _ListItemState();
@@ -24,22 +23,21 @@ class ListItem extends StatefulWidget {
 class _ListItemState extends State<ListItem> {
   // fungsi delete
   final _firestore = FirebaseFirestore.instance;
+   final _storage = FirebaseStorage.instance;
 
-  final _storage = FirebaseStorage.instance;
+   void deleteLaporan() async {
+     try {
+       await _firestore.collection('laporan').doc(widget.laporan.docId).delete();
 
-  void deleteLaporan() async {
-    try {
-      await _firestore.collection('laporan').doc(widget.laporan.docId).delete();
-
-  // menghapus gambar dari storage
-      if (widget.laporan.gambar != '') {
-        await _storage.refFromURL(widget.laporan.gambar!).delete();
-      }
-      Navigator.popAndPushNamed(context, '/dashboard');
-    } catch (e) {
-      print(e);
-    }
-  }
+ // menghapus gambar dari storage
+       if (widget.laporan.gambar != '') {
+         await _storage.refFromURL(widget.laporan.gambar!).delete();
+       }
+       Navigator.popAndPushNamed(context, '/dashboard');
+     } catch (e) {
+       print(e);
+     }
+   }
     @override
     Widget build(BuildContext context) {
       return Container(

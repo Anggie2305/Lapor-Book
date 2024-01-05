@@ -25,16 +25,18 @@ class DashboardFull extends StatefulWidget {
 }
 
 class _DashboardFull extends State<DashboardFull> {
-
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+
+  bool _isLoading = false;
+
   Akun akun = Akun(
-    uid: '',
-    docId: '',
-    nama: '',
-    noHP: '',
-    email: '',
-    role: '',
+  uid: '',
+  docId: '',
+  nama: '',
+  noHP: '',
+  email: '',
+  role: '',
   );
 
   void getAkun() async {
@@ -72,12 +74,10 @@ class _DashboardFull extends State<DashboardFull> {
       });
     }
   }
-
-  bool _isLoading = false;
-
+  
   int _selectedIndex = 0;
-
   List<Widget> pages = [];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -89,25 +89,26 @@ class _DashboardFull extends State<DashboardFull> {
     // TODO: implement initState
     super.initState();
     getAkun();
-  
+
   }
 
-  Widget build(BuildContext context) {  
+  @override
+  Widget build(BuildContext context) {
     pages = <Widget>[
     AllLaporan(akun: akun),
     MyLaporan(akun: akun),
     Profile(akun: akun),
-    ];
+    ];  
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: primaryColor,
-        child: Icon(Icons.add, size: 35),
-        onPressed: () {
+          backgroundColor: primaryColor,
+          child: Icon(Icons.add, size: 35),
+          onPressed: () {
             Navigator.pushNamed(context, '/add', arguments: {
               'akun': akun,
             });
           },
-      ),
+        ),
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text('Lapor Book', style: headerStyle(level:2)),

@@ -4,7 +4,7 @@ import 'package:flutter_application_2/firebase_options.dart';
 import 'package:flutter_application_2/pages/splashpage.dart';
 import 'package:flutter_application_2/pages/AddFormPage.dart';
 import 'package:flutter_application_2/pages/dashboard/DashboardPage.dart';
-// import 'package:flutter_application_2/pages/DetailPage.dart';
+import 'package:flutter_application_2/pages/DetailPage.dart';
 import 'package:flutter_application_2/pages/LoginPage.dart';
 import 'package:flutter_application_2/pages/RegisterPage.dart';
 
@@ -23,7 +23,7 @@ Future<void> main() async {
       '/register': (context) => const RegisterPage(),
       '/dashboard': (context) => const DashboardPage(),
       '/add': (context) => AddFormPage(),
-      // '/detail': (context) => DetailPage(),
+      '/detail': (context) => DetailPage(),
     },
   ));
 }
